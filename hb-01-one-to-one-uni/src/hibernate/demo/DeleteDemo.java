@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 import hibernate.demo.entity.Instructor;
 import hibernate.demo.entity.InstructorDetail;
 
-public class CreateDemo {
+public class DeleteDemo {
 
 	public static void main(String[] args) {
 		
@@ -23,39 +23,25 @@ public class CreateDemo {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// create the objects
-			/*
-			Instructor tempInstructor = 
-					new Instructor("mohamed", "ashraf", "mo@gmail.com");
-			
-			InstructorDetail tempInstructorDetail =
-					new InstructorDetail("www.youtube.com/mo", "movies");
-				*/	
-			Instructor tempInstructor = 
-					new Instructor("mahmoud", "ragab", "ragab@gmail.com");
-			
-			InstructorDetail tempInstructorDetail =
-					new InstructorDetail("www.youtube.com/ragab", "army");
-			
-			
-			
-			// associate the objects
-			tempInstructor.setInstructorDetail(tempInstructorDetail);
-			
-			
 			// start a transaction
 			session.beginTransaction();
 			
+			// get instructor by primary key / id
+			int theId = 1;
+			Instructor tempInstructor = 
+					session.get(Instructor.class, theId);
 			
-			// save the instructor
-			//
-			// Note: this will also save the details objects
-			// because of CascadeType.ALL
-			//
-			System.out.println("Saving instructor: "+tempInstructor);
-			session.save(tempInstructor);
+			System.out.println("Found instructor: "+ tempInstructor);
 			
-			
+			// delete the instructors
+			if(tempInstructor != null) {
+				System.out.println("Deleting: "+ tempInstructor);
+				
+				// Note: will ALSO delete associated "details" object
+				// because of CascadeType.ALL
+				//
+				session.delete(tempInstructor);
+			}
 			
 			// commit transaction
 			session.getTransaction().commit();
