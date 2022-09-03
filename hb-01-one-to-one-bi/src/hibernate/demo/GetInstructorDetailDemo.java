@@ -26,7 +26,7 @@ public class GetInstructorDetailDemo {
 			// start a transaction
 			session.beginTransaction();
 			
-			int theId = 2;
+			int theId = 29;
 			InstructorDetail tempInstructorDetail = 
 					session.get(InstructorDetail.class, theId);
 			
@@ -39,7 +39,15 @@ public class GetInstructorDetailDemo {
 			session.getTransaction().commit();
 			
 			System.out.println("Done!");
-		} finally {
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			// handle connection leak issue
+			session.close();
+			
 			factory.close();
 		} 
 		
