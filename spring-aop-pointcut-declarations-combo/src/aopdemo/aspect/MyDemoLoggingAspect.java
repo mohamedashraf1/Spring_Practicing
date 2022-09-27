@@ -17,15 +17,26 @@ public class MyDemoLoggingAspect {
 	@Pointcut("execution(* aopdemo.dao.*.*(..))")
 	private void forDaoPackage() {}
 	
+	// create point cut for getter methods
+	@Pointcut("execution(* aopdemo.dao.*.get*(..))")
+	private void getter() {}
+	
+	// create point cut for setter methods
+	@Pointcut("execution(* aopdemo.dao.*.set*(..))")
+	private void setter() {}
+	
+	// create point cut: include package ... exclude getter/setter
+	@Pointcut("forDaoPackage() && !(getter() || setter())")
+	private void forDaoPackageNoGetterSetter() {}
 	
 	// apply point cut declaration on this method
-	@Before("forDaoPackage()")
+	@Before("forDaoPackageNoGetterSetter()")
 	public void beforeAddAccountAdvice() {
 		
 		System.out.println("\n=====>>>>> Executing @Before advice on method");
 	}
 	
-	@Before("forDaoPackage()")
+	@Before("forDaoPackageNoGetterSetter()")
 	public void performApiAnalaytics(){
 		System.out.println("\n===> Performing API Analytics");
 	}

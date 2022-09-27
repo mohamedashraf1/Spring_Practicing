@@ -26,6 +26,13 @@ public class MainDemoApp {
 		MembershipDAO theMembershipDAO = 
 				context.getBean("membershipDAO", MembershipDAO.class);
 		
+		// call the accountDao getter/setter method
+		theAccountDAO.setName("mohamed");
+		theAccountDAO.setServiceCode("gold");
+		
+		String name = theAccountDAO.getName();
+		String code = theAccountDAO.getServiceCode();
+		
 		// call the membership method
 		theMembershipDAO.addAccount();
 		theMembershipDAO.goToSleep();
