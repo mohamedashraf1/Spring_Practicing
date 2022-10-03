@@ -12,7 +12,7 @@ public class MyCloudLogAsyncAspect {
 	
 	@Before("aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
 	public void logToCloudAsync(){
-		System.out.println("\n===> Logging to Cloud in async fashion");
+		System.out.println("\n====>>> Logging to Cloud in async fashion");
 	}
 	
 }
