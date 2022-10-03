@@ -1,6 +1,7 @@
 package aopdemo.aspect;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,13 +22,15 @@ import aopdemo.Account;
 @Order(2)
 public class MyDemoLoggingAspect {
 	
+	private Logger myLogger = Logger.getLogger(getClass().getName());
+	
 	@Around("execution(* aopdemo.service.*.getFrotune(..))")
 	public Object arrounGetFortune(
 			ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		
 		// print the method we are advising on
 		String method = proceedingJoinPoint.getSignature().toShortString();
-		System.out.println("\n====>>> Executing @Around on method: " + method);
+		myLogger.info("\n====>>> Executing @Around on method: " + method);
 		
 		// begin time stamp
 		long begin = System.currentTimeMillis();
@@ -40,7 +43,7 @@ public class MyDemoLoggingAspect {
 		
 		// compute duration and display it
 		long duration = end -begin;
-		System.out.println("\n====>>> Duration: "+ duration/1000.0 + " seconds");
+		myLogger.info("\n====>>> Duration: "+ duration/1000.0 + " seconds");
 		
 		return result;
 	}
@@ -52,7 +55,7 @@ public class MyDemoLoggingAspect {
 	public void afterFinallyFindAccountsAdvice(JoinPoint theJoinPoint) {
 		
 		String method = theJoinPoint.getSignature().toShortString();
-		System.out.println("\n====>>> Executing @After (finally) on method: " + method);
+		myLogger.info("\n====>>> Executing @After (finally) on method: " + method);
 		
 	}	
 	
@@ -64,9 +67,9 @@ public class MyDemoLoggingAspect {
 			JoinPoint theJoinPoint, Throwable theExc) {
 		
 		String method = theJoinPoint.getSignature().toShortString();
-		System.out.println("\n====>>> Executing @AfterThrowing on method: " + method);
+		myLogger.info("\n====>>> Executing @AfterThrowing on method: " + method);
 		
-		System.out.println("\n        the Exception is: " + theExc);
+		myLogger.info("\n        the Exception is: " + theExc);
 		
 	}
 	
@@ -80,16 +83,16 @@ public class MyDemoLoggingAspect {
 			JoinPoint theJoinPoint, List<Account> result) {
 		
 		String method = theJoinPoint.getSignature().toShortString();
-		System.out.println("\n====>>> Executing @AfterReturning on method: " + method);
+		myLogger.info("\n====>>> Executing @AfterReturning on method: " + method);
 		
-		System.out.println("\n        result is: " + result);
+		myLogger.info("\n        result is: " + result);
 		
 		// post-process the data
 		
 		// convert the account names to upper case
 		convertAccountNamesToUpperCase(result);
 		
-		System.out.println("\n        result is: " + result);
+		myLogger.info("\n        result is: " + result);
 	}
 	
 	private void convertAccountNamesToUpperCase(List<Account> result) {
@@ -106,24 +109,24 @@ public class MyDemoLoggingAspect {
 	@Before("aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
 	public void beforeAddAccountAdvice(JoinPoint theJoinPoint) {
 		
-		System.out.println("\n====>>> Executing @Before advice on method");
+		myLogger.info("\n====>>> Executing @Before advice on method");
 		
 		// display the method signature
 		MethodSignature methodSig = (MethodSignature) theJoinPoint.getSignature();
-		System.out.println("\n        method: " + methodSig);
+		myLogger.info("\n        method: " + methodSig);
 		
 		// display method arguments
 		
 		Object[] args = theJoinPoint.getArgs();
 		
 		for(Object tempArg: args) {
-			System.out.println("        " + tempArg);
+			myLogger.info("        " + tempArg);
 			
 			if(tempArg instanceof Account) {
 				Account theAccount = (Account) tempArg;
 				
-				System.out.println("account name: " + theAccount.getName());
-				System.out.println("account level: " + theAccount.getLevel());
+				myLogger.info("account name: " + theAccount.getName());
+				myLogger.info("account level: " + theAccount.getLevel());
 			}
 		}
 		
