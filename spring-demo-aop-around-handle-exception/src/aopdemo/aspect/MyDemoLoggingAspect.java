@@ -44,8 +44,12 @@ public class MyDemoLoggingAspect {
 			// log the exception
 			myLogger.warning(e.getMessage());
 			
+			// if you want to handle it:
 			// give user a custom message
-			result = "Major accident! but no worries, help on the way!";
+			// result = "Major accident! but no worries, help on the way!";
+			
+			// if you want to re-throw exception
+			throw e;
 		}
 		
 		// end time stamp
@@ -57,8 +61,6 @@ public class MyDemoLoggingAspect {
 		
 		return result;
 	}
-	
-	
 	
 	
 	@After("execution(* aopdemo.dao.AccountDAO.findAccounts(..))")
