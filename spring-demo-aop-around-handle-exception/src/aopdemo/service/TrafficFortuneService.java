@@ -19,6 +19,15 @@ public class TrafficFortuneService {
 		}
 		
 		// return a fortune
-		return "Expect heavy traffic this morning";
+		return "Excepect heavy traffic this morning";
+	}
+
+	public String getFrotune(boolean tripWire) {
+		
+		if(tripWire) {
+			throw new RuntimeException("Ring road is closed!");
+		}
+				
+		return getFrotune();
 	}
 }
