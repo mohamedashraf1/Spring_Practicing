@@ -27,6 +27,7 @@ public class AroundHandleExceptionDemoApp {
 		
 		myLogger.info("Calling getFortune");
 		
+		// set tripWire to true to trigger the exception
 		boolean tripWire = true;
 		String data = theFortuneService.getFrotune(tripWire);
 		

@@ -23,6 +23,7 @@ public class AfterFinallyDemoApp {
 				
 		try {
 			// add a boolean flag to simulate exception
+			// set tripWire to true to trigger the exception
 			boolean tripWire = false;
 			theAccounts = theAccountDAO.findAccounts(tripWire);
 			

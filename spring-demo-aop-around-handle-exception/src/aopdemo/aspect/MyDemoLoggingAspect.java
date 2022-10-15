@@ -46,6 +46,7 @@ public class MyDemoLoggingAspect {
 			
 			// if you want to handle it:
 			// give user a custom message
+			// and change the value of result
 			// result = "Major accident! but no worries, help on the way!";
 			
 			// if you want to re-throw exception
