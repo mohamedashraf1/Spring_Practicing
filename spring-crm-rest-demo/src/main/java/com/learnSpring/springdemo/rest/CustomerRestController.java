@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learnSpring.springdemo.entity.Customer;
@@ -64,5 +65,18 @@ public class CustomerRestController {
 		return theCustomer;
 	}
 
+	// add mapping for DELETE /customers - delete customer
+	@DeleteMapping("/customers/{customerId}")
+	public String deleteCustomer(@PathVariable int customerId) {
+		Customer theCustomer = customerService.getCustomer(customerId);
 
+		if (theCustomer == null) {
+			throw new CustomerNotFoundException("Customer id not found - " + customerId);
+		}
+		
+		customerService.deleteCustomer(customerId);
 
+		return "Deleted customer id - " + customerId;
+	}
+
+}
